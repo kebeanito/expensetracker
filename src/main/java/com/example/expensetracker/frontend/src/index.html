@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+  <!-- Login Screen -->
+  <div id="login-screen" class="max-w-md mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">Login</h1>
+    <label for="loginUser" class="block mb-2 font-semibold">Select User:</label>
+    <select id="loginUser" class="border p-2 w-full mb-4"></select>
+    <button id="loginBtn" class="bg-blue-500 text-white p-2 rounded w-full">Login</button>
+  </div>
+
+  <!-- Main App -->
+  <div id="app" class="hidden">
+    <h1 class="text-3xl font-bold mb-6">Expense Tracker</h1>
+
+    <form id="expense-form" class="mb-6 bg-white p-4 rounded shadow">
+      <input type="text" id="category" placeholder="Category" class="border p-2 mr-2">
+      <input type="number" id="amount" placeholder="Amount" class="border p-2 mr-2">
+      <input type="text" id="description" placeholder="Description" class="border p-2 mr-2">
+      <input type="date" id="expenseDate" class="border p-2 mr-2">
+      <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add</button>
+    </form>
+
+    <div id="expense-list" class="space-y-4"></div>
+    <button id="logoutBtn" class="mt-4 bg-red-500 text-white p-2 rounded">Logout</button>
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+</html>
