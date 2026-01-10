@@ -1,5 +1,6 @@
-const API_URL = "http://localhost:8080/api/expenses";
-const USERS_URL = "http://localhost:8080/api/users";
+const BASE_URL = "https://expensetracker-production-3d2a.up.railway.app";
+const API_URL = `${BASE_URL}/api/expenses`;
+const USERS_URL = `${BASE_URL}/api/users`;
 
 // Elements
 const authScreen = document.getElementById("auth-screen");
