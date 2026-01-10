@@ -3,61 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <title>Expense Tracker</title>
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center p-4">
 
   <!-- Auth Screen -->
   <div id="auth-screen" class="w-full max-w-md bg-white p-6 rounded-xl shadow mt-12">
-    <h1 id="auth-title" class="text-2xl font-bold mb-4 text-center">Login</h1>
+    <h1 id="auth-title" class="text-2xl font-bold mb-4 text-center text-gray-900">Login</h1>
 
     <form id="auth-form" class="space-y-4">
       <input type="email" id="email" placeholder="Email" class="w-full border p-2 rounded" required>
       <input type="password" id="password" placeholder="Password" class="w-full border p-2 rounded" required>
-      <p id="auth-error" class="text-red-500 text-sm"></p>
       <button type="submit" id="authBtn" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600 transition">Login</button>
     </form>
 
-    <p class="text-center mt-4">
+    <p class="text-center mt-4 text-gray-800">
       <span id="switch-text">Don't have an account?</span>
       <button id="switchBtn" class="text-blue-500 font-semibold hover:underline ml-1">Sign Up</button>
     </p>
   </div>
 
   <!-- App Screen -->
-  <div id="app" class="hidden w-full max-w-3xl mt-8">
+  <div id="app" class="hidden w-full max-w-4xl mt-8">
+
+    <!-- Header -->
     <div class="flex justify-between items-center mb-4">
-      <h1 class="text-3xl font-bold">Expense Tracker</h1>
-      <div>
-        <span class="mr-4 font-semibold">Hello, <span id="username-display"></span></span>
+      <h1 class="text-3xl font-bold text-gray-900">Expense Tracker</h1>
+      <div class="flex items-center space-x-4">
+        <span class="font-semibold text-gray-900">Hello, <span id="username-display"></span></span>
         <button id="logoutBtn" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">Logout</button>
       </div>
     </div>
 
-    <!-- Totals -->
-    <div class="flex space-x-4 mb-6">
+    <!-- Totals & Exports -->
+    <div class="flex flex-wrap space-x-4 mb-6">
       <div class="bg-white p-4 rounded shadow flex-1 text-center">
         <p class="text-gray-500">Total Expenses</p>
-        <p id="total-expenses" class="text-xl font-bold">₱0.00</p>
+        <p id="total-expenses" class="text-xl font-bold text-gray-900">₱0.00</p>
       </div>
       <div class="bg-white p-4 rounded shadow flex-1 text-center">
         <p class="text-gray-500">Total Records</p>
-        <p id="total-records" class="text-xl font-bold">0</p>
+        <p id="total-records" class="text-xl font-bold text-gray-900">0</p>
+      </div>
+      <div class="flex space-x-2 mt-2">
+        <button id="exportCSV" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">Export CSV</button>
+        <button id="exportPDF" class="bg-purple-500 text-white px-3 py-1 rounded hover:bg-purple-600 transition">Export PDF</button>
       </div>
     </div>
 
     <!-- Expense Form -->
     <form id="expense-form" class="mb-6 bg-white p-4 rounded-xl shadow space-y-2">
       <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-        <input type="text" id="category" placeholder="Category" class="border p-2 rounded flex-1">
+        <select id="category" class="border p-2 rounded flex-1">
+          <option value="">Select Category</option>
+          <option>Food</option>
+          <option>Transport</option>
+          <option>Bills</option>
+          <option>Entertainment</option>
+          <option>Shopping</option>
+          <option>Others</option>
+        </select>
         <input type="number" id="amount" placeholder="Amount" class="border p-2 rounded flex-1">
       </div>
       <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
         <input type="text" id="description" placeholder="Description" class="border p-2 rounded flex-1">
         <input type="date" id="expenseDate" class="border p-2 rounded flex-1">
       </div>
-      <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition">Add Expense</button>
+      <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition" disabled>Add Expense</button>
     </form>
+
+    <!-- Charts -->
+<div class="bg-white p-6 rounded-xl shadow mb-6 w-full">
+  <h2 class="text-xl font-semibold text-gray-900 mb-4">Expenses by Category</h2>
+  <canvas id="categoryChart" class="mb-6"></canvas>
+
+  <h2 class="text-xl font-semibold text-gray-900 mb-4">Monthly Expenses</h2>
+  <canvas id="monthlyChart"></canvas>
+</div>
+
 
     <!-- Expense List -->
     <div id="expense-list" class="space-y-4"></div>
